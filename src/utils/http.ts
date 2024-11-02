@@ -37,3 +37,42 @@ uni.addInterceptor('uploadFile', httpInterceptor)
 通过在请求头中自动携带 Authorization Token，用户无需手动在每次请求中添加验证信息。
 服务器能够通过 Token 验证用户的身份，使得每个请求都带有用户身份信息，确保请求的合法性。
 这对需要用户登录的接口至关重要，确保 API 的安全性。*/
+
+interface Data<T> {
+  code: string
+  msg: string
+  result: T
+}
+
+export const http = <T>(options: UniApp.RequestOptions) => {
+  return new Promise<Data<T>>((resolve, reject) => {
+    uni.request({
+      ...options,
+      // 请求成功
+      success(res) {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve(res.data as Data<T>)
+        } else if (res.statusCode === 401) {
+          const memberStore = useMemberStore()
+          memberStore.clearProfile()
+          uni.navigateTo({ url: '/pages/login/login' })
+          reject(res)
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: (res.data as Data<T>).msg || '请求错误',
+          })
+          reject(res)
+        }
+      },
+      // 请求失败
+      fail(err) {
+        uni.showToast({
+          icon: 'none',
+          title: '网络错误,换个网络试试',
+        })
+        reject(err)
+      },
+    })
+  })
+}

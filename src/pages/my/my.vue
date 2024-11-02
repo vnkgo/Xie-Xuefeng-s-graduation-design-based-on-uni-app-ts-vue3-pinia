@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { useMemberStore } from '@/stores'
-import '@utils/http'
+import { http } from '@utils/http'
+
 const memberStore = useMemberStore()
 
-const getData = () => {
-  uni.request({
+const getData = async () => {
+  const res = await http<number[]>({
     method: 'GET',
-    url: '/home/banner',
+    url: '',
     header: {},
   })
+  console.log('获取数据成功', res.result)
 }
 </script>
 
