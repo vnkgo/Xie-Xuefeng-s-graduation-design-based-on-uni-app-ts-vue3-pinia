@@ -1,16 +1,11 @@
 <script setup lang="ts">
-//
+import XtzSwiper from '@/components/XtzSwiper.vue'
+import CustomNavbar from './components/CustomNavbar.vue'
 </script>
 
 <template>
-  <uni-card
-    title="基础卡片"
-    sub-title="副标题"
-    extra="额外信息"
-    thumbnail="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png"
-  >
-    <text>这是一个带</text>
-  </uni-card>
+  <CustomNavbar />
+  <XtzSwiper />
   <view class="index">index</view>
 </template>
 
