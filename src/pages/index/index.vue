@@ -6,6 +6,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import type { BannerItem } from '@/types/home'
 import { ref } from 'vue'
 import categoryPanel from './components/CategoryPanel.vue'
+import type { CategoryItem } from '@/types/home'
 
 const bannerList = ref<BannerItem[]>([])
 
@@ -15,13 +16,16 @@ const getHomeBannerData = async () => {
   bannerList.value = res.result
 }
 
+const categoryList = ref<CategoryItem[]>([])
 //获取前台分类数据
 const getHomeCategoryData = async () => {
   const res = await getHomeCategoryAPI()
+  categoryList.value = res.result
 }
 
 onLoad(() => {
   getHomeBannerData()
+  getHomeCategoryData()
 })
 </script>
 
@@ -31,7 +35,7 @@ onLoad(() => {
   <!--轮播图-->
   <XtzSwiper :list="bannerList" />
   <!--分类面板-->
-  <categoryPanel />
+  <categoryPanel :list="categoryList" />
   <view class="index">index</view>
 </template>
 
