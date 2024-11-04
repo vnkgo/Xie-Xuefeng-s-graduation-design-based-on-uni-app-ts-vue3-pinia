@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import XtzSwiper from '@/components/XtzSwiper.vue'
 import CustomNavbar from './components/CustomNavbar.vue'
-import { getHomeBannerApi } from '@/services/home'
+import { getHomeBannerApi, getHomeCategoryAPI } from '@/services/home'
 import { onLoad } from '@dcloudio/uni-app'
 import type { BannerItem } from '@/types/home'
 import { ref } from 'vue'
@@ -13,6 +13,11 @@ const getHomeBannerData = async () => {
   const res = await getHomeBannerApi()
   console.log(res)
   bannerList.value = res.result
+}
+
+//获取前台分类数据
+const getHomeCategoryData = async () => {
+  const res = await getHomeCategoryAPI()
 }
 
 onLoad(() => {
