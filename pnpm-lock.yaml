@@ -114,9 +114,6 @@ importers:
       eslint-plugin-vue:
         specifier: ^9.8.0
         version: 9.8.0(eslint@8.28.0)
-      husky:
-        specifier: ^8.0.2
-        version: 8.0.2
       lint-staged:
         specifier: ^13.0.4
         version: 13.0.4
@@ -2686,11 +2683,6 @@ packages:
   human-signals@3.0.1:
     resolution: {integrity: sha512-rQLskxnM/5OCldHo+wNXbpVgDn5A17CUoKX+7Sokwaknlq7CdSnphy0W39GU8dw59XiCXmFXDg4fRuckQRKewQ==}
     engines: {node: '>=12.20.0'}
-
-  husky@8.0.2:
-    resolution: {integrity: sha512-Tkv80jtvbnkK3mYWxPZePGFpQ/tT3HNSs/sasF9P2YfkMezDl3ON37YN6jUUI4eTg5LcyVynlb6r4eyvOmspvg==}
-    engines: {node: '>=14'}
-    hasBin: true
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -7625,8 +7617,6 @@ snapshots:
   human-signals@2.1.0: {}
 
   human-signals@3.0.1: {}
-
-  husky@8.0.2: {}
 
   iconv-lite@0.4.24:
     dependencies:
