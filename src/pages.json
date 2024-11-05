@@ -52,7 +52,7 @@
   // 设置 TabBar
   "tabBar": {
     "color": "#333",
-    "selectedColor": "#27ba9b",
+    "selectedColor": "#ffa722",
     "backgroundColor": "#fff",
     "borderStyle": "white",
     "list": [
