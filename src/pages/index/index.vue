@@ -7,7 +7,7 @@ import type { BannerItem } from '@/types/home'
 import { ref } from 'vue'
 import categoryPanel from './components/CategoryPanel.vue'
 import type { CategoryItem, HotItem } from '@/types/home'
-
+import XtzGuessLike from '@/components/XtzGuessLike.vue'
 import HotPanel from './components/HotPanel.vue'
 
 const bannerList = ref<BannerItem[]>([])
@@ -41,19 +41,30 @@ onLoad(() => {
 <template>
   <!--自定义导航栏-->
   <CustomNavbar />
-  <!--轮播图-->
-  <XtzSwiper :list="bannerList" />
-  <!--分类面板-->
-  <categoryPanel :list="categoryList" />
-  <!--热门推荐-->
-  <HotPanel :list="hotList" />
-
-  <view class="index">index</view>
+  <!--滚动视图-->
+  <scroll-view class="scroll-view" scroll-y>
+    <!--轮播图-->
+    <XtzSwiper :list="bannerList" />
+    <!--分类面板-->
+    <categoryPanel :list="categoryList" />
+    <!--热门推荐-->
+    <HotPanel :list="hotList" />
+    <!--你会喜欢-->
+    <XtzGuessLike />
+    <view class="index">index</view>
+  </scroll-view>
 </template>
 
 <style lang="scss">
 //
 page {
   background-color: #f7f7f7;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+scroll-view {
+  flex: 1;
+  height: 0;
 }
 </style>
