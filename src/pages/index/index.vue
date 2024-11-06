@@ -9,6 +9,7 @@ import categoryPanel from './components/CategoryPanel.vue'
 import type { CategoryItem, HotItem } from '@/types/home'
 import XtzGuessLike from '@/components/XtzGuessLike.vue'
 import HotPanel from './components/HotPanel.vue'
+import type { XtzGuessInstance } from '@/types/component'
 
 const bannerList = ref<BannerItem[]>([])
 
@@ -36,13 +37,21 @@ onLoad(() => {
   getHomeCategoryData()
   getHomeHotData()
 })
+
+// 获取猜你喜欢实例
+const guessRef = ref<XtzGuessInstance>()
+// 滚动到底部
+const onScrolltolower = () => {
+  // console.log('触底了')
+  guessRef.value?.getMore()
+}
 </script>
 
 <template>
   <!--自定义导航栏-->
   <CustomNavbar />
   <!--滚动视图-->
-  <scroll-view class="scroll-view" scroll-y>
+  <scroll-view @scrolltolower="onScrolltolower" class="scroll-view" scroll-y>
     <!--轮播图-->
     <XtzSwiper :list="bannerList" />
     <!--分类面板-->
@@ -50,7 +59,7 @@ onLoad(() => {
     <!--热门推荐-->
     <HotPanel :list="hotList" />
     <!--你会喜欢-->
-    <XtzGuessLike />
+    <XtzGuessLike ref="guessRef" />
     <view class="index">index</view>
   </scroll-view>
 </template>
