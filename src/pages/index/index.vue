@@ -53,8 +53,14 @@ const isTriggered = ref(false)
 //自定义下拉刷新被触发
 const openfresherrefresh = async () => {
   isTriggered.value = true
+  guessRef.value?.resetData()
   //同时发送三个请求,并行请求
-  await Promise.all([getHomeBannerData(), getHomeCategoryData(), getHomeHotData()])
+  await Promise.all([
+    getHomeBannerData(),
+    getHomeCategoryData(),
+    getHomeHotData(),
+    guessRef.value?.getMore(),
+  ])
   //关闭加载动画
   isTriggered.value = false
 }

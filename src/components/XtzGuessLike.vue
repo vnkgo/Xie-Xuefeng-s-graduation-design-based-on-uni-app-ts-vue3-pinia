@@ -6,7 +6,7 @@ import type { PageParams } from '@/types/global'
 //分页参数
 //不用required会报错无法传参
 const pageParams: Required<PageParams> = {
-  page: 30,
+  page: 1,
   pageSize: 10,
 }
 
@@ -41,8 +41,16 @@ onMounted(() => {
   getHomeGoodsGuessLikeData()
 })
 
+//重置数据
+const resetData = () => {
+  pageParams.page = 1
+  guessLikeList.value = []
+  pageFinish.value = false
+}
+
 //暴露方法
 defineExpose({
+  resetData,
   getMore: getHomeGoodsGuessLikeData,
 })
 </script>
