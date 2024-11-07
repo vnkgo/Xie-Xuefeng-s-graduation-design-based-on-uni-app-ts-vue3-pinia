@@ -37,6 +37,8 @@ onLoad(() => {
   getHomeCategoryData()
   getHomeHotData()
 })
+//这里分页最好再加个节流，防止加载过程中用户再次上拉触底再次发送请求
+const isLoading = ref(false)
 
 // 获取猜你喜欢实例
 const guessRef = ref<XtzGuessInstance>()

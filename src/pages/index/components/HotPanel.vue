@@ -47,7 +47,7 @@ defineProps<{
     color: #262626;
     position: relative;
     .title-desc {
-      font-size: 24rpx;
+      font-size: 19rpx;
       color: #7f7f7f;
       margin-left: 18rpx;
     }
