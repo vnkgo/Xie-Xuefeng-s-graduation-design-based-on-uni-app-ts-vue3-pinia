@@ -47,13 +47,31 @@ const onScrolltolower = () => {
   // console.log('触底了')
   guessRef.value?.getMore()
 }
+// 是否触发下拉刷新
+const isTriggered = ref(false)
+
+//自定义下拉刷新被触发
+const openfresherrefresh = async () => {
+  isTriggered.value = true
+  //同时发送三个请求,并行请求
+  await Promise.all([getHomeBannerData(), getHomeCategoryData(), getHomeHotData()])
+  //关闭加载动画
+  isTriggered.value = false
+}
 </script>
 
 <template>
   <!--自定义导航栏-->
   <CustomNavbar />
   <!--滚动视图-->
-  <scroll-view @scrolltolower="onScrolltolower" class="scroll-view" scroll-y>
+  <scroll-view
+    refresher-enabled="true"
+    @refresherrefresh="openfresherrefresh"
+    :refresher-triggered="isTriggered"
+    @scrolltolower="onScrolltolower"
+    class="scroll-view"
+    scroll-y
+  >
     <!--轮播图-->
     <XtzSwiper :list="bannerList" />
     <!--分类面板-->
