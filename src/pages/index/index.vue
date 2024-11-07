@@ -60,7 +60,7 @@ const onScrolltolower = () => {
     <HotPanel :list="hotList" />
     <!--你会喜欢-->
     <XtzGuessLike ref="guessRef" />
-    <view class="index">index</view>
+    <view class="index"></view>
   </scroll-view>
 </template>
 

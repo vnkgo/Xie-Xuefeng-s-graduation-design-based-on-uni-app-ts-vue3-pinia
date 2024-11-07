@@ -2,14 +2,40 @@
 import { getHomeGoodsGuessLikeAPI } from '@/services/home'
 import { onMounted, ref } from 'vue'
 import type { GuessItem } from '@/types/home'
+import type { PageParams } from '@/types/global'
+//分页参数
+//不用required会报错无法传参
+const pageParams: Required<PageParams> = {
+  page: 30,
+  pageSize: 10,
+}
 
 const guessLikeList = ref<GuessItem[]>([])
-
+//已结束标记
+const pageFinish = ref(false)
 //获取猜你喜欢数据
 const getHomeGoodsGuessLikeData = async () => {
-  const res = await getHomeGoodsGuessLikeAPI()
-  guessLikeList.value = res.result.items
+  //退出判断
+  if (pageFinish.value === true) {
+    return uni.showToast({
+      title: '没有更多数据了',
+      icon: 'none',
+    })
+  }
+  const res = await getHomeGoodsGuessLikeAPI(pageParams)
+  //guessLikeList.value = res.result.
+  //数组的追加
+  guessLikeList.value.push(...res.result.items)
+
+  if (pageParams.page < res.result.pages) {
+    //页码累 加
+    pageParams.page++
+  } else {
+    //没有更多数据
+    pageFinish.value = true
+  }
 }
+
 // 组件加载完成
 onMounted(() => {
   getHomeGoodsGuessLikeData()
@@ -41,7 +67,7 @@ defineExpose({
       </view>
     </navigator>
   </view>
-  <view class="loading-text"> 别吵,我在加载... </view>
+  <view class="loading-text">{{ pageFinish ? '没有别的了' : '别吵我在加载' }} </view>
 </template>
 
 <style lang="scss">
