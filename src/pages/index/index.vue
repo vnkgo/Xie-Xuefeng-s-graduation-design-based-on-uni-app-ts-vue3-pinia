@@ -10,6 +10,7 @@ import type { CategoryItem, HotItem } from '@/types/home'
 import XtzGuessLike from '@/components/XtzGuessLike.vue'
 import HotPanel from './components/HotPanel.vue'
 import type { XtzGuessInstance } from '@/types/component'
+import PageSkeleton from './components/PageSkeleton.vue'
 
 const bannerList = ref<BannerItem[]>([])
 
@@ -32,13 +33,17 @@ const getHomeHotData = async () => {
   const res = await getHomeHotAPI()
   hotList.value = res.result
 }
-onLoad(() => {
-  getHomeBannerData()
-  getHomeCategoryData()
-  getHomeHotData()
+//是否加载中
+const isLoading = ref(false)
+
+onLoad(async () => {
+  isLoading.value = true
+  await Promise.all([getHomeBannerData(), getHomeCategoryData(), getHomeHotData()])
+
+  //加载完全部节目,关闭加载动画
+  isLoading.value = false
 })
 //这里分页最好再加个节流，防止加载过程中用户再次上拉触底再次发送请求
-const isLoading = ref(false)
 
 // 获取猜你喜欢实例
 const guessRef = ref<XtzGuessInstance>()
@@ -78,15 +83,18 @@ const openfresherrefresh = async () => {
     class="scroll-view"
     scroll-y
   >
-    <!--轮播图-->
-    <XtzSwiper :list="bannerList" />
-    <!--分类面板-->
-    <categoryPanel :list="categoryList" />
-    <!--热门推荐-->
-    <HotPanel :list="hotList" />
-    <!--你会喜欢-->
-    <XtzGuessLike ref="guessRef" />
-    <view class="index"></view>
+    <PageSkeleton v-if="isLoading" />
+    <template v-else>
+      <!--轮播图-->
+      <XtzSwiper :list="bannerList" />
+      <!--分类面板-->
+      <categoryPanel :list="categoryList" />
+      <!--热门推荐-->
+      <HotPanel :list="hotList" />
+      <!--你会喜欢-->
+      <XtzGuessLike ref="guessRef" />
+      <view class="index"></view>
+    </template>
   </scroll-view>
 </template>
 
